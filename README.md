@@ -17,14 +17,14 @@ project.
 This system has several distinct advantages, but one important
 disadvantage is the fragmentation of learning material and general
 confusion for beginners. We can't expect every new Rust user to show
-up in `r/rust` to ask which HTTP client to use.
+up in [r/rust][rust-subreddit] to ask which HTTP client to use.
 
 Practical Rust attempts to alleviate some of this pressure. Our goal
-is to be a first-stop for Rust users wondering if there's a well-
-trodden path to accomplishing whatever basic task they have in front
-of them.
+is to be a first-stop for Rust users wondering if there's a well-trodden
+path to accomplishing whatever task they have in front of them.
 
 ## Get in touch
 Check out our Matrix space at [`#practicalrust:matrix.org`][space].
 
+[rust-subreddit]: https://reddit.com/r/rust
 [space]: https://matrix.to/#/#practicalrust:matrix.org
