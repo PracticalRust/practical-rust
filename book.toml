@@ -1,0 +1,6 @@
+[book]
+authors = ["Vince Mutolo"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Practical Rust"
