@@ -20,7 +20,7 @@ confusion for beginners. We can't expect every new Rust user to show
 up in [r/rust][rust-subreddit] to ask which HTTP client to use.
 
 Practical Rust attempts to alleviate some of this pressure. Our goal
-is to be a first-stop for Rust users wondering if there's a well-trodden
+is to be a first stop for Rust users wondering if there's a well-trodden
 path to accomplishing whatever task they have in front of them.
 
 ## Get in touch
