@@ -1,6 +1,8 @@
 # Designing Data Structures
 
-> Rule 5.  Data dominates.  If you've chosen the right data structures and organized things well, the algorithms will almost always be self-evident.  Data structures, not algorithms, are central to programming. ([Rob Pike](http://doc.cat-v.org/bell_labs/pikestyle))
+> Rule 5.  Data dominates.  If you've chosen the right data structures and organized things well, the algorithms will almost always be self-evident.  Data structures, not algorithms, are central to programming.
+> 
+> (Rob Pike, [Notes on Programming in C](http://doc.cat-v.org/bell_labs/pikestyle))
 
 Data structures lie at the heart of all computing, and they're much too great a topic to cover here in any meaningful way. However, there are tips and tricks most experienced Rust programmers encounter at some point. Below is a loosely organized, ever-growing list of patterns at least tangentially related to data-structure design.
 
