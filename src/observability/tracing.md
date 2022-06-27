@@ -76,6 +76,6 @@ A set of related events occurring over time is a "span". Conceptually, a span wi
 }
 ```
 
-Alomst any analysis of this applications emitted logs will benefit from the added structure.
+Alomst any analysis of this applications' emitted logs will benefit from the added structure.
 
 
