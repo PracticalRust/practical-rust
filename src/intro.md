@@ -10,11 +10,11 @@ Practical Rust is divided into macro topics, listed below. If you don't know wha
 
 ## Not Covered
 
-Practical Rust is not meant to be a beginners' guide to the language itself, but rather a guide to the ecosystem and common ways we solve common problems. If you're looking for language-specific answers, consider one of the following excellent resources:
+Practical Rust is not meant to be a beginners' guide to the language itself, but rather a guide to the ecosystem and common ways we solve common problems. If you're looking for information on learning the language itself, consider one of the following excellent resources:
 
-- [The Rust Book][rust-book]
-- [Rust by Example][rust-by-example]
-- [Rust API Guidelines][api-guidelines]
+- [The Rust Book][rust-book]: the de-facto beginners' guide to Rust.
+- [Rust by Example][rust-by-example]: A collection of examples demonstrating the application of beginners' skills.
+- [Rust API Guidelines][api-guidelines]: follow this to construct idiomatic Rust libraries
 
 [rust-book]: https://doc.rust-lang.org/stable/book/
 [rust-by-example]: https://doc.rust-lang.org/rust-by-example
