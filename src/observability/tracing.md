@@ -14,7 +14,9 @@ Tracing is both a specific kind of observability and a [Rust crate][tracing-crat
 
 ## Tracing: the Practice
 
-Tracing is all about the observability of *per-event data* (~~stolen~~ borrowed from [Brendan Gregg][gregg]). It's not about measuring the overall memory usage of your process over time. It's not about finding the calculating your egress costs by measuring bandwidth. It's all about *events*.
+Tracing is all about the observability of *per-event data* (~~stolen~~ borrowed from [Brendan Gregg][gregg]). It's not about measuring the overall memory usage of your process over time. It's not about whether your disk is full. Both of those examples are about high-level system resource monitoring.
+
+Tracing is all about *events*, and sometimes aggregations over events. How many bytes were in the payload for *this request*? What was the distribution of payload sizes last month? Tracing helps to answer these questions.
 
 Most applications can be understood as a series of discrete events. Often these events are logically independent. Any request-reply application is trivially event-based. The events are the request-reply pairs.
 
