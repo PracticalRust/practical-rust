@@ -1,0 +1,538 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Practical Rust</title>
+        <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded "><a href="serialization/index.html"><strong aria-hidden="true">1.</strong> Serialization</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="serialization/configuration.html"><strong aria-hidden="true">1.1.</strong> Config Files</a></li></ol></li><li class="chapter-item expanded "><a href="observability/index.html"><strong aria-hidden="true">2.</strong> Observability</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="observability/tracing.html"><strong aria-hidden="true">2.1.</strong> Tracing</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.2.</strong> BPF</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> Performance</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.</strong> Measurement</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Improvement</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.1.</strong> Caching</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.2.</strong> Probabilistic Filters</div></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> Science</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">4.1.</strong> Statistics</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.2.</strong> Units</div></li></ol></li><li class="chapter-item expanded "><a href="tips/index.html"><strong aria-hidden="true">5.</strong> Rust Tips</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tips/data-structures.html"><strong aria-hidden="true">5.1.</strong> Designing Data Structures</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Practical Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<h2 id="organization"><a class="header" href="#organization">Organization</a></h2>
+<p>Practical Rust is divided into macro topics, listed below. If you don't know what you're looking for, try reading through the descriptions of the various sections and see if one of them sounds similar to the problem you're trying to solve. If it does, click though to that section, where you'll find a more detailed summary.</p>
+<ul>
+<li><a href="/serialization">Serialization:</a> reading or writing native program data in an interoperable format (config files, sending data over a network, etc.)</li>
+<li><a href="/observability">Observability:</a> enabling the measurement and observation of program state over time.</li>
+</ul>
+<h2 id="not-covered"><a class="header" href="#not-covered">Not Covered</a></h2>
+<p>Practical Rust is not meant to be a beginners' guide to the language itself, but rather a guide to the ecosystem and common ways we solve common problems. If you're looking for information on learning the language itself, consider one of the following excellent resources:</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/stable/book/">The Rust Book</a>: the de-facto beginners' guide to Rust.</li>
+<li><a href="https://doc.rust-lang.org/rust-by-example">Rust by Example</a>: A collection of examples demonstrating the application of beginners' skills.</li>
+<li><a href="https://rust-lang.github.io/api-guidelines">Rust API Guidelines</a>: follow this to construct idiomatic Rust libraries</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="serialization"><a class="header" href="#serialization">Serialization</a></h1>
+<ul>
+<li><a href="serialization/./configuration.html">Configuration:</a> supplying input to your program</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="observability"><a class="header" href="#observability">Observability</a></h1>
+<blockquote>
+<p>Observability refers to understanding a system through observation…</p>
+<p>(Brendan Gregg, <a href="https://www.brendangregg.com/bpf-performance-tools-book.html">BPF Performance Tools</a>)</p>
+</blockquote>
+<p>One of the most important properties of well-designed applications is their <em>observability</em>. We have to be able to inspect the relevant state of our application in detail, and we have to do it both in the past and present. </p>
+<p>Let's say our program is a basic web server hosting some CRUD app. It's running normally, and then our continuous monitoring tool reports abnormally slow response times. We see this alert an hour after it comes in. By then, response times are back to normal.</p>
+<p>Ideally we would be able to answer the following questions.</p>
+<ul>
+<li><strong>Why were the response times slow?</strong>
+<ul>
+<li>It was due to a spike in traffic that led to high CPU utilization.</li>
+</ul>
+</li>
+<li><strong>When did this spike in traffic occur?</strong>
+<ul>
+<li>Between 10–11 AM.</li>
+</ul>
+</li>
+<li><strong>What IP addresses were making the queries causing the spike?</strong>
+<ul>
+<li>It was two IP addresses <code>X</code> and <code>Y</code>.</li>
+<li>Investigation shows they're both hosted on Amazon EC2.</li>
+</ul>
+</li>
+<li><strong>What endpoints were queried by those IPs during the spike?</strong> 
+<ul>
+<li>Both <code>/login</code> and <code>/signin</code> were queried in approximately equal volume.</li>
+</ul>
+</li>
+<li><strong>Which endpoint ate up the CPU?</strong>
+<ul>
+<li>The <code>/login</code> endpoint caused the high CPU utilization.</li>
+</ul>
+</li>
+<li><strong>For the same number of requests, why does one endpoint use more CPU?</strong>
+<ul>
+<li>The <code>/login</code> endpoint was performing <code>argon2i</code> password hashes</li>
+<li>The <code>/signin</code> endpoint was instantly returning <code>404 Not Found</code>.</li>
+</ul>
+</li>
+<li><strong>Were any of those requests successful?</strong>
+<ul>
+<li>No, they all returned <code>401 Unauthorized</code>.</li>
+</ul>
+</li>
+</ul>
+<p>From this information, we would be able to understand that the first-order cause of our slow responses was high CPU usage. The second-order cause was that an attacker was attempting to gain access to an account (probably) by trying a password list. The third-order cause was either that our rate limit on <code>/login</code> attempts is too high, or our settings on <code>argon2i</code> hashing are too computationally expensive.</p>
+<p>We don't usually know all of the exact questions we'll be asking about our application in the future. An <em>observable</em> application is one that supports asking novel questions without needing to be re-programmed.</p>
+<p>This can lead to a balancing act. We want to be able to answer critical questions about an application's past and present state, but observability comes with a small, but non-zero runtime cost. If we capture every packet sent to and from a web server, we'll have incredible visibility into exactly what requests and responses we're sending out, the rate they're being sent, to whom and when, and so on. But we'll also have a massive amount of data to continously transmit to a central logging repository, and to store once the data get there.</p>
+<p>Always profile your application so that you're aware of the runtime cost (or lack thereof) you pay for using various observability methods.</p>
+<h2 id="observability-in-rust"><a class="header" href="#observability-in-rust">Observability in Rust</a></h2>
+<ul>
+<li><a href="observability/./tracing.html">tracing</a>: emit and collect event-based data</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tracing"><a class="header" href="#tracing">Tracing</a></h1>
+<p>Tracing is both a specific kind of observability and a <a href="https://docs.rs/tracing/latest/tracing/">Rust crate</a> that enables it.</p>
+<h2 id="quick-links"><a class="header" href="#quick-links">Quick Links</a></h2>
+<ul>
+<li><a href="https://docs.rs/tracing/0.1.35/tracing/index.html">tracing</a>: the core emitter library. Use this to output events for subscribers to collect.</li>
+<li><a href="https://docs.rs/tracing-subscriber/latest/tracing_subscriber/">tracing-subscriber</a>: the core collector library. Use this to actually serialize the events and spans you generate. <code>tracing-subscriber</code> has a couple default subscribers to check out. It also defines the necessary traits needed to implement your own.</li>
+<li><a href="https://tokio.rs/tokio/topics/tracing">tokio's tracing intro</a>. (<code>tracing</code> is a part of the broader <code>tokio</code> project.)</li>
+</ul>
+<h2 id="tracing-the-practice"><a class="header" href="#tracing-the-practice">Tracing: the Practice</a></h2>
+<p>Tracing is all about the observability of <em>per-event data</em> (<del>stolen</del> borrowed from <a href="https://brendangregg.com/blog/2019-01-01/learn-ebpf-tracing.html">Brendan Gregg</a>). It's not about measuring the overall memory usage of your process over time. It's not about whether your disk is full. Both of those examples are about high-level system resource monitoring.</p>
+<p>Tracing is all about <em>events</em>, and sometimes aggregations over events. How many bytes were in the payload for <em>this request</em>? What was the distribution of payload sizes last month? Tracing helps to answer these questions.</p>
+<p>Most applications can be understood as a series of discrete events. Often these events are logically independent. Any request-reply application is trivially event-based. The events are the request-reply pairs.</p>
+<p>But even something less obviously event-based can still benefit from drawing certain boundaries to encapsulate &quot;events'. Let's say our application is training a neural network. I would anticipate eventually wanting insight into the training process. What sort of &quot;event data&quot; would be helpful here? I might choose individual trainig epochs as the beginnings of new events. The events would then last until the next epoch, and they would contain summary statistics about the performance of that mini training run and the parameters used.</p>
+<p>Of course, not all useful information is found in event data. High-level overviews of system state are still critically important. (Ever run out of space because you forgot to turn on log-rotation? Me neither.) But when it's time to dive into the nitty gritty of what's been happening on your system, event traces will prove invaluable.</p>
+<h2 id="tracing-the-crate"><a class="header" href="#tracing-the-crate">Tracing: the Crate</a></h2>
+<blockquote>
+<p>tracing is a framework for instrumenting Rust programs to collect structured, event-based diagnostic information.</p>
+<p>(<a href="https://docs.rs/tracing/0.1.35/tracing/index.html">The <code>tracing</code> docs</a>)</p>
+</blockquote>
+<p>That about sums it up. Let's unpack some of the key terms.</p>
+<ul>
+<li><strong>framework</strong>: <code>tracing</code> is more than just a crate. It's a set of interfaces for plugging into shared tracing infrastructure. With just <code>tracing</code> you can't even see the logs you're producing. The main goal for <code>tracing</code> is to give library authors a small dependency that allows them to:
+<ol>
+<li>Choose what information is relevant in an event.</li>
+<li>Conform to a standard interface that &quot;subscribers&quot; (event collectors) use to collect data.</li>
+</ol>
+</li>
+<li><strong>instrumenting</strong>: refers to modifying code to enable the emission of relevant information</li>
+<li><strong>structured</strong>: machine-parseable, i.e. queryable. It's easy for basic logging to only be amenable to human analysis. For tracing to be effective, the collected information should be consumable by a machine and ready for analytical processing (often by submitting the logs to an OLAP database).</li>
+</ul>
+<p><code>tracing</code> itself is pretty bare-bones. It's inteded for use by both library and executable authors, so it's good that it only requires users to bring in a small dependency. <code>tracing</code> generally expects that users will either depend on or write other crates to provide the exact suite of functionality they want.</p>
+<h3 id="events-and-spans"><a class="header" href="#events-and-spans">Events and Spans</a></h3>
+<p><code>tracing</code> differentiates between &quot;events&quot; and &quot;spans&quot;. &quot;Events&quot; are likely a familiar concept; they generally map well to &quot;logs&quot; that we've all seen before. Events generally have a timestamp (they occur at a single instant), some structured data, and a message meant for human consumption.</p>
+<p>However, events often fail to capture the relationship that they have <em>with each other</em>. During the course of a request-reply session, there can be hundreds or thousands of events. Let's make some up:</p>
+<pre><code class="language-json">{&quot;ts&quot;: 1655342020100, &quot;method&quot;: &quot;GET&quot;, &quot;path&quot;: &quot;/&quot;}
+{&quot;ts&quot;: 1655342020200, &quot;found_user_header&quot;: true, &quot;user&quot;: &quot;steve3&quot;}
+{&quot;ts&quot;: 1655342020300, &quot;read&quot;: &quot;public/index.html&quot;}
+{&quot;ts&quot;: 1655342020400, &quot;status_code&quot;: 200}
+</code></pre>
+<p>These are all individual events, but there's no <em>structure</em> that relates them. Sure, we could throw a <code>request_id</code> in each of them so that it's possible to correlate them, but why force ourselves into that extra step of analysis? We know at the time of the request that all of these pieces of information are deeply related. Let's encode that into the structure of our events.</p>
+<blockquote>
+<p>Spans represent periods of time in which a program was executing in a particular context. (<a href="https://docs.rs/tracing/0.1.35/tracing/index.html">tracing docs</a>)</p>
+</blockquote>
+<p>A set of related events occurring over time is a &quot;span&quot;. Conceptually, a span with all the information from the above example might look like this:</p>
+<pre><code class="language-json">{
+    &quot;request_method&quot;: &quot;GET&quot;,
+    &quot;request_path&quot;: &quot;/&quot;,
+    &quot;begin_ts&quot;: 1655342020100,
+    &quot;end_ts&quot;: 1655342020400,
+    &quot;events&quot;: [
+        {&quot;ts&quot;: 1655342020200, &quot;found_user_header&quot;: true, &quot;user&quot;: &quot;steve3&quot;},
+        {&quot;ts&quot;: 1655342020300, &quot;read&quot;: &quot;public/index.html&quot;},
+        {&quot;ts&quot;: 1655342020400, &quot;status_code&quot;: 200}
+    ]
+}
+</code></pre>
+<p>Alomst any analysis of this applications' emitted logs will benefit from the added structure.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tips-and-tricks"><a class="header" href="#tips-and-tricks">Tips and Tricks</a></h1>
+<p>In a sense, the most common problem Rust programmers have to tackle is… actually writing Rust. To that end, this section goes into some general guidelines, tips, and tricks that may be helpful to Rustaceans.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="designing-data-structures"><a class="header" href="#designing-data-structures">Designing Data Structures</a></h1>
+<blockquote>
+<p>Rule 5.  Data dominates.  If you've chosen the right data structures and organized things well, the algorithms will almost always be self-evident.  Data structures, not algorithms, are central to programming.</p>
+<p>(Rob Pike, <a href="http://doc.cat-v.org/bell_labs/pikestyle">Notes on Programming in C</a>)</p>
+</blockquote>
+<p>Data structures lie at the heart of all computing, and they're much too great a topic to cover here in any meaningful way. However, there are tips and tricks most experienced Rust programmers encounter at some point. Below is a loosely organized, ever-growing list of patterns at least tangentially related to data-structure design.</p>
+<h2 id="structuring-complex-enums"><a class="header" href="#structuring-complex-enums">Structuring complex enums</a></h2>
+<p>Occasionally we may need to have a somewhat complex enum type. There are some subtleties around structuring complex enums that can help with the ergonomics of actually <em>using</em> those types down the line.</p>
+<p>As a motivating example, let's say that we're writing a backend API for a microblogging platform. Specifically, we're designing an endpoint called <code>/post</code> that will allow a user to submit a POST request carrying the content of their post, and our endpoint will write the content to our platform.</p>
+<p>The catch is that there are two types of posts: text posts and picture posts. So it makes sense to come up with a type that can represent either one of them. This is exactly the purpose of Rust's enums.</p>
+<h3 id="pattern-bag-of-struct-variants"><a class="header" href="#pattern-bag-of-struct-variants">Pattern: bag-of-struct-variants</a></h3>
+<p>So we build the following type:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum PostContent {
+    Text {
+        username: String,
+        time: u64,
+        location: (f32, f32),
+        text: String,
+    },
+    Image {
+        username: String,
+        time: u64,
+        location: (f32, f32),
+        image_data: Vec&lt;u8&gt;,
+        caption: String,
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>This is the natural starting place for when we're thinking about just coming up with <em>something</em> that will work. Basically, we make a <a href="https://doc.rust-lang.org/rust-by-example/custom_types/enum.html">struct variant</a> for each possible case and then fill that variant with every field we'll need in the corresponding case.</p>
+<p>There are some downsides to this approach. First, there's often duplication of the fields that the different variants have in common. Every variant of <code>PostContent</code> has the fields <code>username</code>, <code>time</code>, and <code>location</code>, but this fact isn't expressed in the type system. This leads to the creation of methods like the following:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">enum PostContent {
+</span><span class="boring">    Text {
+</span><span class="boring">        username: String,
+</span><span class="boring">        time: u64,
+</span><span class="boring">        location: (f32, f32),
+</span><span class="boring">        text: String,
+</span><span class="boring">    },
+</span><span class="boring">    Image {
+</span><span class="boring">        username: String,
+</span><span class="boring">        time: u64,
+</span><span class="boring">        location: (f32, f32),
+</span><span class="boring">        image_data: Vec&lt;u8&gt;,
+</span><span class="boring">        caption: String,
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>impl PostContent {
+    fn username(&amp;self) -&gt; &amp;str {
+        match self {
+            PostContent::Text { username, .. }
+            | PostContent::Image { username, .. } =&gt; username
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>username</code> method expresses the fact that <code>PostContent</code> will always have a username field. This <em>works</em>. There's nothing terribly wrong with it. But… it's a little unsatisfying. And verbose. Surely there's a way we can express the guaranteed existence of <code>username</code>, <code>time</code>, and <code>location</code> without manually constructing a method for each of them.</p>
+<p>Another issue is that the match ergonomics can be a little verbose. Let's say we want to write out a log for the request with all the relevant information. Here's how we might do that:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">enum PostContent {
+</span><span class="boring">    Text {
+</span><span class="boring">        username: String,
+</span><span class="boring">        time: u64,
+</span><span class="boring">        location: (f32, f32),
+</span><span class="boring">        text: String,
+</span><span class="boring">    },
+</span><span class="boring">    Image {
+</span><span class="boring">        username: String,
+</span><span class="boring">        time: u64,
+</span><span class="boring">        location: (f32, f32),
+</span><span class="boring">        image_data: Vec&lt;u8&gt;,
+</span><span class="boring">        caption: String,
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">fn get_post() -&gt; PostContent {
+</span><span class="boring">    PostContent::Text {
+</span><span class="boring">        username: String::new(),
+</span><span class="boring">        time: 0,
+</span><span class="boring">        location: (0.0, 0.0),
+</span><span class="boring">        text: String::new(),
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>let post_content = get_post();
+
+match post_content {
+    PostContent::Text { username, time, location, .. } =&gt; println!(
+        &quot;username={username} \
+        time={time} \
+        location={location:?}&quot;
+    ),
+    PostContent::Image { username, time, location, caption, .. } =&gt; println!(
+        &quot;username={username} \
+        time={time} \
+        location={location:?} \
+        caption={caption}&quot;
+    )
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>As we add more logged information to these variants, the match patterns become longer and longer. I personally wouldn't want to see something like this in my codebase:</p>
+<pre><code class="language-rust ignore">match post_content {
+    PostContent::Image {
+        username,
+        full_name,
+        time,
+        location,
+        caption,
+        authentication_token,
+        in_reply_to,
+    } =&gt; {
+        println!(todo!())
+    }
+}
+</code></pre>
+<p>I mean — it's <em>fine</em>. Nothing horrific. But it does get worse as the types get more complicated, and we can do better.</p>
+<h3 id="pattern-structs-in-tuple-variants"><a class="header" href="#pattern-structs-in-tuple-variants">Pattern: structs-in-tuple-variants</a></h3>
+<p>Instead of using struct variants, we can optionally create dedicated types for each of our cases, and then stick them in tuple variants. This will help solve the verbosity problem.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum PostContent {
+    Text(TextContent),
+    Image(ImageContent),
+}
+
+struct TextContent {
+    username: String,
+    time: u64,
+    location: (f32, f32),
+    text: String,
+}
+
+struct ImageContent {
+    username: String,
+    time: u64,
+    location: (f32, f32),
+    image_data: Vec&lt;u8&gt;,
+    caption: String,
+}
+
+<span class="boring">fn get_post() -&gt; PostContent {
+</span><span class="boring">    PostContent::Text(TextContent {
+</span><span class="boring">        username: String::new(),
+</span><span class="boring">        time: 0,
+</span><span class="boring">        location: (0.0, 0.0),
+</span><span class="boring">        text: String::new(),
+</span><span class="boring">    })
+</span><span class="boring">}
+</span>let post_content = get_post();
+
+match post_content {
+    PostContent::Text(text)=&gt; println!(
+        &quot;username={} time={} location={:?}&quot;,
+        text.username,
+        text.time,
+        text.location,
+    ),
+    PostContent::Image(image) =&gt; println!(
+        &quot;username={} time={} location={:?} caption={}&quot;,
+        image.username,
+        image.time,
+        image.location,
+        image.caption,
+    )
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>We broke out the data from each variant into its own struct and then switched to tuple variants in the enum to hold our structs. This is primarily beneficial when you're frequently using lots of different fields from the variants. If you're only using one or two fields, the pattern matching won't get too crazy. </p>
+<p>One thing we lose is the ability to use the handy identifiers-in-format-strings approach to string interpolation. C'est la vie.</p>
+<p><em>Also</em>, we still haven't solved one of our two problems: the fields <code>username</code>, <code>time</code>, and <code>location</code> aren't guaranteed by the type system to be present. Boooooo.</p>
+<h3 id="pattern-struct-in-tuple-variant-of-enum-in-struct"><a class="header" href="#pattern-struct-in-tuple-variant-of-enum-in-struct">Pattern: struct-in-tuple-variant-of-enum-in-struct</a></h3>
+<p>For our final trick, we create one last type and stick in it all the fields that are guaranteed to be present. Those fields are removed from the enum variants, and the enum itself has been renamed rather uncreatively to <code>InnerPostContent</code>. </p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct PostContent {
+    username: String,
+    time: u64,
+    location: (f32, f32),
+    inner: InnerPostContent,
+}
+
+enum InnerPostContent {
+    Text(TextContent),
+    Image(ImageContent),
+}
+
+struct TextContent {
+    text: String,
+}
+
+struct ImageContent {
+    image_data: Vec&lt;u8&gt;,
+    caption: String,
+}
+
+<span class="boring">fn get_post() -&gt; PostContent {
+</span><span class="boring">    PostContent {
+</span><span class="boring">        username: String::new(),
+</span><span class="boring">        time: 0,
+</span><span class="boring">        location: (0.0, 0.0),
+</span><span class="boring">        inner: InnerPostContent::Text(TextContent {
+</span><span class="boring">            text: String::new(),
+</span><span class="boring">        })
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>
+let post_content = get_post();
+
+match post_content.inner {
+    InnerPostContent::Text(_)=&gt; println!(
+        &quot;username={} time={} location={:?}&quot;,
+        post_content.username,
+        post_content.time,
+        post_content.location,
+    ),
+    InnerPostContent::Image(image) =&gt; println!(
+        &quot;username={} time={} location={:?} caption={}&quot;,
+        post_content.username,
+        post_content.time,
+        post_content.location,
+        image.caption,
+    )
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Now the type systems knows <em>for sure</em> that any instance of <code>PostContent</code> will have a <code>username</code>, <code>time</code>, and <code>location</code>. Accessor methods can be defined more compactly, or omitted entirely if the fields are public. This pattern does create a bit more boilerplate, but in the end <strong>it manages to encode more of our business logic and invariants in the type system</strong> than the other two patterns. That's a win.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+    </body>
+</html>
