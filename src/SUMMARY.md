@@ -1,6 +1,7 @@
 # Summary
 
-- [Introduction](./intro.md)
+[Introduction](README.md)
+
 - [Serialization](./serialization/README.md)
   - [Config Files](./serialization/configuration.md)
 - [Observability](./observability/README.md)
