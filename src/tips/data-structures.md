@@ -192,7 +192,7 @@ One thing we lose is the ability to use the handy identifiers-in-format-strings 
 
 *Also*, we still haven't solved one of our two problems: the fields `username`, `time`, and `location` aren't guaranteed by the type system to be present. Boooooo.
 
-### Pattern: struct-in-struct-variant-of-enum-in-struct
+### Pattern: struct-in-tuple-variant-of-enum-in-struct
 
 For our final trick, we create one last type and stick in it all the fields that are guaranteed to be present. Those fields are removed from the enum variants, and the enum itself has been renamed rather uncreatively to `InnerPostContent`. 
 
